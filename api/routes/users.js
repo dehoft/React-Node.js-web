@@ -3,11 +3,16 @@ const userProducts = require('./userProducts');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const checkAdminAuth = require('../middleware/check-admin-permissions');
+const checkUserAuth = require('../middleware/check-user-permissions');
+
 
 const User = require('../models/user');
 
 
-users.get('/', (req, res, next) => {
+
+
+users.get('/',checkAdminAuth, (req, res, next) => {
     User.find()
     .select('_id username password adress city phoneNumber role')
     .exec()
@@ -42,7 +47,7 @@ users.get('/', (req, res, next) => {
     });
 });
 
-users.get('/:userId', (req, res, next) => {
+users.get('/:userId', checkUserAuth, (req, res, next) => {
         var id = req.params.userId;
         User.findById(id)
         .select('_id username password adress city phoneNumber role')
@@ -63,7 +68,7 @@ users.get('/:userId', (req, res, next) => {
         });
 });
 
-users.post('/', (req, res, next) => {
+users.post('/signup', (req, res, next) => {
     User.find({username: req.body.username})
     .exec()
     .then(user => {
@@ -134,7 +139,8 @@ users.post('/login', (req, res, next) => {
             if (result){
                 const token = jwt.sign({
                     username: user[0].username,
-                    userId: user[0]._id
+                    userId: user[0]._id,
+                    role: user[0].role
                 },
                 process.env.JWT_KEY,
                 {
@@ -160,7 +166,7 @@ users.post('/login', (req, res, next) => {
 
 
 //If id not found then status = 404
-users.patch('/:userId', (req, res, next) => {
+users.patch('/:userId', checkUserAuth, (req, res, next) => {
     var id = req.params.userId;
     var updateOps = {};
     for(const ops of req.body)
@@ -184,9 +190,48 @@ users.patch('/:userId', (req, res, next) => {
     });
 });
 
+users.patch('/:userId/promote', checkAdminAuth, (req, res, next) => {
+    var id = req.params.userId;
+    User.update({ _id: id }, {role: "ADMIN"})
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: 'User succesfully promoted',
+            request: {
+                type: 'GET',
+                url: 'http://localhost:3000/users/' + id
+            }
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(result);
+    });
+});
+
+users.patch('/:userId/demote', checkAdminAuth, (req, res, next) => {
+    var id = req.params.userId;
+    User.update({ _id: id }, {role: "USER"})
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: 'User succesfully demoted',
+            request: {
+                type: 'GET',
+                url: 'http://localhost:3000/users/' + id
+            }
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(result);
+    });
+});
+
+
 
 //If id not found then status = 404
-users.delete('/:userId', (req, res, next) => { //TODO is user doesnt exist it should throw error as well
+users.delete('/:userId', checkUserAuth, (req, res, next) => { //TODO is user doesnt exist it should throw error as well
     var id = req.params.userId;
     User.remove({ _id: id })
     .exec()

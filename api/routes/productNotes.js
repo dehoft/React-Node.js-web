@@ -1,9 +1,12 @@
 const notes = require('express').Router({mergeParams: true});
 const mongoose = require('mongoose');
+const checkAdminAuth = require('../middleware/check-admin-permissions');
+const checkUserAuth = require('../middleware/check-user-permissions');
+
 
 const Note = require('../models/note');
 
-notes.get('/', (req, res, next) => {
+notes.get('/', checkUserAuth, (req, res, next) => {
     var productId = req.params.productId;
     Note.find()
     .where('fk_Product')
@@ -24,7 +27,7 @@ notes.get('/', (req, res, next) => {
     });
 });
 
-notes.get('/:noteId', (req, res, next) => {
+notes.get('/:noteId', checkUserAuth, (req, res, next) => {
     var id = req.params.noteId;
     var productId = req.params.productId;
     Note.findById(id)
@@ -46,7 +49,7 @@ notes.get('/:noteId', (req, res, next) => {
     });  
 });
 
-notes.post('/', (req, res, next) =>{
+notes.post('/', checkUserAuth, (req, res, next) =>{
     var note = new Note({
         _id: new mongoose.Types.ObjectId(),
         note: req.body.note,
@@ -71,7 +74,7 @@ notes.post('/', (req, res, next) =>{
     });    
 });
 
-notes.patch('/:noteId', (req, res, next) => {
+notes.patch('/:noteId', checkUserAuth, (req, res, next) => {
     var id = req.params.noteId;
     var productId = req.params.productId;
     var updateOps = {};
@@ -93,7 +96,7 @@ notes.patch('/:noteId', (req, res, next) => {
 
 
 //If id not found then status = 404
-notes.delete('/:noteId', (req, res, next) => {
+notes.delete('/:noteId', checkUserAuth, (req, res, next) => {
     var id = req.params.noteId;
     var productId = req.params.productId;
     Note.remove({ _id: id, fk_Product: productId})

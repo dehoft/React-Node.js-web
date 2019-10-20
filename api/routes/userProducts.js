@@ -1,11 +1,12 @@
 const products = require('express').Router({mergeParams: true});
 const productnotes = require('./productNotes');
 const mongoose = require('mongoose');
-const checkAuth = require('../middleware/check-permissions');
+const checkAdminAuth = require('../middleware/check-admin-permissions');
+const checkUserAuth = require('../middleware/check-user-permissions');
 
 const Product = require('../models/product');
 
-products.get('/', (req, res, next) => {
+products.get('/',checkUserAuth, (req, res, next) => {
     var userId = req.params.userId;
     Product.find()
     .where('fk_User')
@@ -26,7 +27,7 @@ products.get('/', (req, res, next) => {
     });
 });
 
-products.get('/:productId', (req, res, next) => {
+products.get('/:productId',checkUserAuth, (req, res, next) => {
     var id = req.params.productId;
     var userId = req.params.userId;
     Product.findById(id)
@@ -48,7 +49,7 @@ products.get('/:productId', (req, res, next) => {
     });  
 });
 
-products.post('/', checkAuth, (req, res, next) =>{
+products.post('/', checkUserAuth, (req, res, next) =>{
     var product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -75,7 +76,7 @@ products.post('/', checkAuth, (req, res, next) =>{
     });    
 });
 
-products.patch('/:productId', (req, res, next) => {
+products.patch('/:productId',checkUserAuth, (req, res, next) => {
     var id = req.params.productId;
     var userId = req.params.userId;
     var updateOps = {};
@@ -97,7 +98,7 @@ products.patch('/:productId', (req, res, next) => {
 
 
 //If id not found then status = 404
-products.delete('/:productId', (req, res, next) => {
+products.delete('/:productId',checkUserAuth, (req, res, next) => {
     var id = req.params.productId;
     var userId = req.params.userId;
     Product.remove({ _id: id, fk_User: userId})
