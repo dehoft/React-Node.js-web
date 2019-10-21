@@ -5,7 +5,7 @@ const checkAdminAuth = require('../middleware/check-admin-permissions');
 const Note = require('../models/note');
 const Product = require('../models/product');
 
-
+// Route for ADMIN to get all notes of selected product
 notes.get('/', checkAdminAuth, (req, res, next) => {
     var productId = req.params.productId;
     Product.fintById(productId)
@@ -39,12 +39,11 @@ notes.get('/', checkAdminAuth, (req, res, next) => {
     .catch(err => {
         console.loog(err);
         res.status(500).json({error: err});
-    });
-
-
-    
+    });    
 });
 
+
+// Route for ADMIN to get selected note of selected product
 notes.get('/:noteId', checkAdminAuth, (req, res, next) => {
     var id = req.params.noteId;
     var productId = req.params.productId;
@@ -83,6 +82,7 @@ notes.get('/:noteId', checkAdminAuth, (req, res, next) => {
         res.status(500).json({error: err});
     });   
 });
+
 
 notes.post('/', checkAdminAuth, (req, res, next) =>{
     var note = new Note({

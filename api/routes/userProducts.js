@@ -18,7 +18,7 @@ products.get('/',checkUserAuth, (req, res, next) => {
         {
             res.status(200).json(docs);
         }else{
-            res.status(404).json({message: 'No information to fetch, Product table is empty'})
+            res.status(404).json({message: 'No information to fetch, Products table is empty'})
         }
     })
     .catch(err => {
@@ -27,7 +27,7 @@ products.get('/',checkUserAuth, (req, res, next) => {
     });
 });
 
-products.get('/:productId',checkUserAuth, (req, res, next) => {
+products.get('/:productId', checkUserAuth, (req, res, next) => {
     var id = req.params.productId;
     var userId = req.params.userId;
     Product.findById(id)
@@ -62,7 +62,7 @@ products.post('/', checkUserAuth, (req, res, next) =>{
     .then(result => {
         console.log(result),
         res.status(201).json({
-            message: 'POST to /products succesful!',
+            message: 'Product created',
             createdProduct: result
         });
 
@@ -76,7 +76,7 @@ products.post('/', checkUserAuth, (req, res, next) =>{
     });    
 });
 
-products.patch('/:productId',checkUserAuth, (req, res, next) => {
+products.patch('/:productId', checkUserAuth, (req, res, next) => {
     var id = req.params.productId;
     var userId = req.params.userId;
     var updateOps = {};
@@ -86,19 +86,21 @@ products.patch('/:productId',checkUserAuth, (req, res, next) => {
     }
     Product.update({ _id: id , fk_User: userId}, {$set: updateOps})
     .exec()
-    .then(result => {
-        console.log(result);
-        res.status(200).json(result);
+    .then(result => {       
+        res.status(200).json({
+            message: "Product updated"
+        });
     })
     .catch(err => {
-        console.log(err);
-        res.status(500).json(result);
+        res.status(500).json({
+            error: err
+        });
     });
 });
 
 
 //If id not found then status = 404
-products.delete('/:productId',checkUserAuth, (req, res, next) => {
+products.delete('/:productId', checkUserAuth, (req, res, next) => {
     var id = req.params.productId;
     var userId = req.params.userId;
     Product.remove({ _id: id, fk_User: userId})

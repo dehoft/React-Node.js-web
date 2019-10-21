@@ -3,11 +3,14 @@ const userProducts = require('./userProducts');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+
 const checkAdminAuth = require('../middleware/check-admin-permissions');
 const checkUserAuth = require('../middleware/check-user-permissions');
 
 
 const User = require('../models/user');
+const Product = require('../models/product');
+const Note = require('../models/note');
 
 
 
@@ -47,6 +50,7 @@ users.get('/',checkAdminAuth, (req, res, next) => {
     });
 });
 
+
 users.get('/:userId', checkUserAuth, (req, res, next) => {
         var id = req.params.userId;
         User.findById(id)
@@ -67,6 +71,7 @@ users.get('/:userId', checkUserAuth, (req, res, next) => {
             res.status(400).json({Message: "Bad request"});
         });
 });
+
 
 users.post('/signup', (req, res, next) => {
     User.find({username: req.body.username})
@@ -120,6 +125,7 @@ users.post('/signup', (req, res, next) => {
     })
 
 });
+
 
 users.post('/login', (req, res, next) => {
     User.find({username: req.body.username})
@@ -230,23 +236,61 @@ users.patch('/:userId/demote', checkAdminAuth, (req, res, next) => {
 
 
 
-//If id not found then status = 404
-users.delete('/:userId', checkUserAuth, (req, res, next) => { //TODO is user doesnt exist it should throw error as well
+
+users.delete('/:userId', checkUserAuth, (req, res, next) => {
     var id = req.params.userId;
-    User.remove({ _id: id })
+    User.findById(id)
     .exec()
-    .then(result => {
-        res.status(200).json({
-            message: 'User deleted'
-        })
+    .then(docs => {
+        if(docs)
+        {
+            Product.find({fk_User: id}).exec().then(docs => {                
+                docs.forEach(product => {                    
+                    Note.deleteMany({fk_Product: product._id}).exec().then(result => {
+                        res.status(500).json({
+                            message: working
+                        })
+                    }).catch(err => {
+                        res.status(500).json({
+                            error: err
+                        })
+                    })
+                });
+            }).catch(err => {
+                res.status(500).json({
+                    error: err
+                })
+            })
+
+            Product.deleteMany({fk_User: id}).exec().then().catch(err => {
+                res.status(500).json({
+                    error: err
+                })
+            })
+
+            User.deleteOne({ _id: id })
+            .exec()
+            .then(result => {
+                res.status(200).json({
+                    message: 'User deleted'
+                })
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({
+                    error: err
+                })
+            })
+
+        }else{
+            res.status(404).json({
+                message: 'User not found'
+            })
+        }
     })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json({
-            error: err
-        });
-    });
-});
+    .catch()
+
+})
 
 users.use('/:userId/userProducts', userProducts);
 
