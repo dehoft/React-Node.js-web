@@ -1,0 +1,5 @@
+{
+    "env": {
+        "BACKEND": "http://localhost:3000"
+    }
+}

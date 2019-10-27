@@ -21,7 +21,7 @@ users.get('/',checkAdminAuth, (req, res, next) => {
     .exec()
     .then(docs => {
         const response = {
-            usersCount: docs.length,
+            //usersCount: docs.length,
             users: docs.map(doc => {
                 return {
                     _id: doc._id,
