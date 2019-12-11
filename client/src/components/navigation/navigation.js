@@ -5,10 +5,6 @@ import './navigation.css';
 
 
 
-
-
-
-
 function navigation() {
  
   return (

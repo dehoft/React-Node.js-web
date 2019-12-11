@@ -2,6 +2,7 @@ import React from 'react';
 import Slideshow from './components/slideshow/slideshow';
 import Navigation from './components/navigation/navigation'
 import Header from './components/Header/Header'
+import Footer from "./components/footer/footer";
 import LoginModal from './components/LoginModal/LoginModal'
 import Button from 'react-bootstrap/Button'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
@@ -18,10 +19,9 @@ function App() {
       <Header></Header>
       <Navigation></Navigation>
       <Slideshow></Slideshow>
-
-         <ButtonToolbar>
+      <ButtonToolbar>
            <Button variant="primary" onClick={() => setModalShow(true)}>
-             Launch vertically centered modal
+             Login Bitch
            </Button>
      
            <LoginModal
@@ -29,6 +29,8 @@ function App() {
              onHide={() => setModalShow(false)}
            />
          </ButtonToolbar>
+      <Footer></Footer>
+      
          </div> 
 
 
