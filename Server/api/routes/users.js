@@ -12,10 +12,12 @@ const User = require('../models/user');
 const Product = require('../models/product');
 const Note = require('../models/note');
 
+var tokenList = {}
 
 
 
-users.get('/',checkAdminAuth, (req, res, next) => {
+
+users.get('/',/**checkAdminAuth,**/ (req, res, next) => {
     User.find()
     .select('_id username password adress city phoneNumber role')
     .exec()
@@ -45,7 +47,7 @@ users.get('/',checkAdminAuth, (req, res, next) => {
         }
     })
     .catch(err => {
-        console.loog(err);
+        console.log(err);
         res.status(500).json({error: err});
     });
 });
@@ -143,6 +145,7 @@ users.post('/login', (req, res, next) => {
                 });
             }
             if (result){
+
                 const token = jwt.sign({
                     username: user[0].username,
                     userId: user[0]._id,
@@ -151,13 +154,25 @@ users.post('/login', (req, res, next) => {
                 process.env.JWT_KEY,
                 {
                     expiresIn: "1h"
-                });      
+                });  
+                
+                const refreshToken = jwt.sign({
+                    username: user[0].username,
+                    userId: user[0]._id,
+                    role: user[0].role
+                },
+                process.env.JWT_REFRESH_KEY,
+                {
+                    expiresIn: "1d"
+                });  
                 
                 return res.status(200).json({
                     message: 'Login successful',
-                    token: token
+                    token: token,
+                    refreshToken : refreshToken
                 });
             }
+            tokenList[refreshToken] = response
             res.status(401).json({
                 message: "Username password combination is wrong"
             });
@@ -171,7 +186,7 @@ users.post('/login', (req, res, next) => {
 });
 
 
-//If id not found then status = 404
+
 users.patch('/:userId', checkUserAuth, (req, res, next) => {
     var id = req.params.userId;
     var updateOps = {};

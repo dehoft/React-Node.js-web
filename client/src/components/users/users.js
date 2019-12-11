@@ -22,9 +22,11 @@ class Users extends Component{
     <div>
         <h2>Users </h2>
         <ul>
-            {this.state.items.map(user => 
+            {/* {this.state.items.map(user => 
                 <li key={user._id}> { user.username } { user.adress } {user.city }</li>                
-            )}
+            )} */} 
+
+            
         </ul>
         
     </div>

@@ -37,6 +37,13 @@ app.use('/products', productRoutes);
 app.use('/users', usersRoutes);
 app.use('/notes', notesRoutes);
 
+app.use("/token", (req, res, next) =>
+{
+    res.json({
+        message: "Hello"
+    });
+
+});
 
 app.use((req, res, next) => {
     const error = new Error('Bad request');

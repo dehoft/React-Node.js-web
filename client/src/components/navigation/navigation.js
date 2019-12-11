@@ -1,8 +1,14 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import LoginModal from '../LoginModal/LoginModal'
 import './navigation.css';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
 
@@ -10,6 +16,7 @@ import './navigation.css';
 
 
 function navigation() {
+ 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
     <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
@@ -21,12 +28,13 @@ function navigation() {
         </Nav>
         <Nav>
         <Nav.Link href="#deets">More deets</Nav.Link>
-        <Nav.Link eventKey={2} href="#memes">
-            Dank memes
+        <Nav.Link eventKey={2} href="#memes">Dank memes
         </Nav.Link>
         </Nav>
     </Navbar.Collapse>
     </Navbar>
+
+
   );
 }
 
