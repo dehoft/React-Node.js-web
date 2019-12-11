@@ -1,17 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
+import Navigation from './components/navigation/navigation'
 import './App.css';
-import Users from './components/users/users';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-         <img src={logo} className="App-logo" alt="logo" /> 
-        <Users />        
-      </header>
-    </div>
+      <Navigation></Navigation>
+
   );
 }
 
