@@ -4,27 +4,43 @@ const mongoose = require('mongoose');
 const checkAdminAuth = require('../middleware/check-admin-permissions');
 const checkUserAuth = require('../middleware/check-user-permissions');
 
+const jwt = require('jsonwebtoken');
+
 const Product = require('../models/product');
 
 products.get('/',checkUserAuth, (req, res, next) => {
-    var userId = req.params.userId;
-    Product.find()
-    .where('fk_User')
-    .equals(userId)
-    .exec()
-    .then(docs => {
-        console.log(docs);
-        if(docs.length > 0)
-        {
-            res.status(200).json(docs);
-        }else{
-            res.status(404).json({message: 'No information to fetch, Products table is empty'})
-        }
-    })
-    .catch(err => {
-        console.loog(err);
-        res.status(500).json({error: err});
-    });
+    
+    var userId = req.params.userId;   
+    if(req.userData.userId === userId)
+    {
+        Product.find()
+        .where('fk_User')
+        .equals(userId)
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            if(docs.length > 0)
+            {
+                res.status(200).json(docs);
+            }else{
+                res.status(404).json({message: 'No information to fetch, Products table is empty',
+                username: req.userData.username       
+            })
+            }
+        })
+        .catch(err => {
+            console.loog(err);
+            res.status(500).json({error: err});
+        });
+    }
+    else
+    {
+        return res.status(401).json({
+            message: "Auth failed",
+            id: req.userData._id
+        })
+    }
+    
 });
 
 products.get('/:productId', checkUserAuth, (req, res, next) => {
