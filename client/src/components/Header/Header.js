@@ -1,13 +1,14 @@
 import React from 'react';
-import Image from 'react-bootstrap/Image'
 import logo from './header.jpg'
-
+import './header.css';
 function Header()
 {
     return(
 
-        <Image src={logo} fluid
-         />
+        <img
+      className="w-100 headerimg"
+      src={logo}
+    />
         
     );
 }
