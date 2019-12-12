@@ -5,10 +5,11 @@ function Header()
 {
     return(
 
-        <img
+      <img
       className="w-100 headerimg"
-      src={logo}
-    />
+      src={logo}  
+      alt="Header Logo"
+      />
         
     );
 }
