@@ -9,6 +9,8 @@ import axios from 'axios';
 
 class registration extends React.Component{
 
+ 
+
     constructor(props) 
     {
         super(props);
@@ -18,6 +20,7 @@ class registration extends React.Component{
         this.cityEl = React.createRef();
         this.phoneNumberEl = React.createRef();
     }
+
 
     submitHandler = (event) => {
         event.preventDefault();
@@ -42,13 +45,27 @@ class registration extends React.Component{
             "phoneNumber": phoneNumber
         };
 
+        
+
         axios.post('http://localhost:3000/users/signup', 
         requestBody,
         )
         .then((res) => {
-            console.log(res);            
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+            }
+            return res;                
+        })
+        .then(resData => {
+            console.log(resData);
+        })
+        .catch(err => {
+            console.log(err);
         });
+
     };
+
+
 
 
 render() {

@@ -2,12 +2,13 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
-
-
+import AuthContext from '../../context/auth-context'
 
 
 
 class login extends React.Component{
+
+    static contextType = AuthContext;
 
     constructor(props) 
     {
@@ -33,14 +34,22 @@ class login extends React.Component{
 
 
         axios.post('http://localhost:3000/users/login', 
-        {
-            "username": username,
-            "password": password
-        },
+        requestBody,
         )
-        .then((res) => {
-            console.log(res);
-            
+        .then((response) => {
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error('Failed!');
+            }
+            return response;                
+        })
+        .then(resData => {
+            if (resData.data.token) {
+                this.context.login(resData.data.token, resData.data.userId);
+                
+            }
+        })
+        .catch(err => {
+            console.log(err);
         });
     };
 
