@@ -2,7 +2,7 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
-
+import "./registration.css"
 
 
 
@@ -53,7 +53,8 @@ class registration extends React.Component{
 
 render() {
     return (
-
+        <div className="loginbg">
+        <div className="loginform center">
             <Form onSubmit={this.submitHandler}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>
@@ -79,15 +80,16 @@ render() {
                     <Form.Label>PhoneNumber</Form.Label>
                     <Form.Control type="phoneNumber" placeholder="Enter phone number" ref={this.phoneNumberEl}/>
                 </Form.Group>
-
-
-
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                <Button href="login">Back</Button>
-
+            <div className="formbtnpad">
+            <div class="row">
+            <div class="column">  <Button variant="info formbt" type="submit">Submit</Button></div>
+            <div class="column middle"></div>
+            <div class="column"> <Button variant="info formbt" href="login">Back</Button></div>
+            </div>
+            </div>
             </Form>
+        </div>
+    </div>
 
       )
   
