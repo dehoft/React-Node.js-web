@@ -2,7 +2,10 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
+
 import AuthContext from '../../context/auth-context'
+import './login.css';
+
 
 
 
@@ -56,10 +59,11 @@ class login extends React.Component{
 
 render() {
     return (
-
+        <div className="loginbg">
+            <div className="loginform center">
             <Form onSubmit={this.submitHandler}>
             <Form.Group controlId="formBasicEmail">
-                <Form.Label>Username</Form.Label>
+                <Form.Label className="labelcenter">Username</Form.Label>
                 <Form.Control type="username" placeholder="Enter username" ref={this.usernameEl}/>
             </Form.Group>
 
@@ -67,14 +71,18 @@ render() {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" ref={this.passwordEl}/>
             </Form.Group>
-
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-
-            <Button href="register">Register</Button>
+            <div className="formbtnpad">
+            <div class="row">
+            <div class="column"> <Button variant="info formbt formbtnspacing" type="submit">Login</Button></div>
+            <div class="column middle"></div>
+            <div class="column"><Button variant="info formbt" href="register">Sign Up</Button></div>
+            </div>
+            </div>
             </Form>
-
+            </div>
+        
+           
+    </div>
       )
   
     }
