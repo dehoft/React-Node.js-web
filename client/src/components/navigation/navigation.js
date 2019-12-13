@@ -2,20 +2,39 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
-import AuthContext from '../../context/auth-context'
+
 
 import './navigation.css';
-//import {BrowserRouter as Link} from 'react-router-dom'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions'
 
 
 
-function navigation() {
- 
-  return (
 
-    <AuthContext.Consumer>
-    {(context) => {
+class navigation extends React.Component {
+
+  onLogoutClick(e)
+  {
+    e.preventDefault();
+    this.props.logoutUser();   
+    
+  }
+
+  
+
+
+
+  render (){
+      const {isAuthenticated, user} = this.props.auth;
+      console.log(isAuthenticated);
+      const role = user.role ? user.role[0] : null;  
+      
+
+    
+    
       return (
+        
         <Navbar collapseOnSelect expand="lg" >
         <Nav.Item><Navbar.Brand href="/" className='colorHome'>Home</Navbar.Brand></Nav.Item>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -23,18 +42,32 @@ function navigation() {
             <Nav className="mr-auto">
             </Nav>
             <Nav>
-            <Nav.Link href="products" >Products</Nav.Link>
-            <Nav.Link  href="profile">Profile</Nav.Link>
-            <Nav.Link  href="login">Log In</Nav.Link>
+             {isAuthenticated && <Nav.Link href="products" >Products</Nav.Link>}
+             {isAuthenticated && <Nav.Link  href="profile">Profile</Nav.Link>}
+             {isAuthenticated &&  role === 'ADMIN' && <Nav.Link  href="profile">Users</Nav.Link>}
+             <Nav.Link  href="login">Log In</Nav.Link>
+             {isAuthenticated && <Nav.Link onClick={this.props.logoutUser}>Log Out</Nav.Link>}
+             
+
+            
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+        
       )
-    }}
     
-
-    </AuthContext.Consumer>
-  );
+    
+    
+  }
 }
 
-export default navigation;
+navigation.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logoutUser })(navigation);

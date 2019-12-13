@@ -17,7 +17,7 @@ var tokenList = {}
 
 
 
-users.get('/',/**checkAdminAuth,**/ (req, res, next) => {
+users.get('/',checkAdminAuth, (req, res, next) => {
     User.find()
     .select('_id username password adress city phoneNumber role')
     .exec()
@@ -146,6 +146,8 @@ users.post('/login', (req, res, next) => {
             }
             if (result){
 
+                const userId = user[0]._id;
+
                 const token = jwt.sign({
                     username: user[0].username,
                     userId: user[0]._id,
@@ -167,12 +169,13 @@ users.post('/login', (req, res, next) => {
                 });  
                 
                 return res.status(200).json({
-                    message: 'Login successful',
+                    message: 'Login successful123',
                     token: token,
-                    refreshToken : refreshToken
+                    refreshToken : refreshToken,
+                    userId: userId
                 });
             }
-            tokenList[refreshToken] = response
+            //tokenList[refreshToken] = response
             res.status(401).json({
                 message: "Username password combination is wrong"
             });

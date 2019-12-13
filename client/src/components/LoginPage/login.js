@@ -1,9 +1,14 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { loginUser } from '../../actions/authActions'
+//import axios from 'axios';
+
 
 import AuthContext from '../../context/auth-context'
+//import setAuthToken from '../../utils/setAuthToken'
 import './login.css';
 
 
@@ -18,7 +23,15 @@ class login extends React.Component{
         super(props);
         this.usernameEl = React.createRef();
         this.passwordEl = React.createRef();
+
+        this.state = {
+            errors: {}
+        }
+       
+       
     }
+
+
 
     submitHandler = (event) => {
         event.preventDefault();
@@ -34,27 +47,27 @@ class login extends React.Component{
             "username": username,
             "password": password
         };
-
-
-        axios.post('http://localhost:3000/users/login', 
-        requestBody,
-        )
-        .then((response) => {
-            if (response.status !== 200 && response.status !== 201) {
-                throw new Error('Failed!');
-            }
-            return response;                
-        })
-        .then(resData => {
-            if (resData.data.token) {
-                this.context.login(resData.data.token, resData.data.userId);
-                
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
+       
+        this.props.loginUser(requestBody);
+        //this.props.logoutUser();
+        
     };
+
+      componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/')
+    }
+  }
+
+        componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push('/');
+        }
+
+        if (nextProps.errors) {
+            this.setState({errors: nextProps.errors});
+        }
+    }
 
 
 render() {
@@ -72,10 +85,10 @@ render() {
                 <Form.Control type="password" placeholder="Password" ref={this.passwordEl}/>
             </Form.Group>
             <div className="formbtnpad">
-            <div class="row">
-            <div class="column"> <Button variant="info formbt formbtnspacing" type="submit">Login</Button></div>
-            <div class="column middle"></div>
-            <div class="column"><Button variant="info formbt" href="register">Sign Up</Button></div>
+            <div className="row">
+            <div className="column"> <Button variant="info formbt formbtnspacing" type="submit" >Login</Button></div>
+            <div className="column middle"></div>
+            <div className="column"><Button variant="info formbt" href="register">Sign Up</Button></div>
             </div>
             </div>
             </Form>
@@ -88,4 +101,16 @@ render() {
     }
 }
 
-export default login;
+login.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, { loginUser })(login);

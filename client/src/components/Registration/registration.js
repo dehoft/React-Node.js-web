@@ -1,13 +1,16 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import axios from 'axios';
 import "./registration.css"
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions'
 
 
 
 
-class registration extends React.Component{
+class registration extends React.Component { 
 
  
 
@@ -19,6 +22,10 @@ class registration extends React.Component{
         this.adressEl = React.createRef();
         this.cityEl = React.createRef();
         this.phoneNumberEl = React.createRef();
+
+        this.state = {
+            errors: {}
+        };
     }
 
 
@@ -45,30 +52,25 @@ class registration extends React.Component{
             "phoneNumber": phoneNumber
         };
 
-        
-
-        axios.post('http://localhost:3000/users/signup', 
-        requestBody,
-        )
-        .then((res) => {
-            if (res.status !== 200 && res.status !== 201) {
-                throw new Error('Failed!');
-            }
-            return res;                
-        })
-        .then(resData => {
-            console.log(resData);
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        this.props.registerUser(requestBody, this.props.history);
 
     };
+
+    componentDidUpdate(nextProps) {
+        if(nextProps.errors)
+        {
+            this.setState({errors: nextProps.errors});
+        }
+    }
 
 
 
 
 render() {
+
+    //const { errors } = this.state;     TO DO add error for input fields
+    
+
     return (
         <div className="loginbg">
         <div className="loginform center">
@@ -98,10 +100,10 @@ render() {
                     <Form.Control type="phoneNumber" placeholder="Enter phone number" ref={this.phoneNumberEl}/>
                 </Form.Group>
             <div className="formbtnpad">
-            <div class="row">
-            <div class="column">  <Button variant="info formbt" type="submit">Submit</Button></div>
-            <div class="column middle"></div>
-            <div class="column"> <Button variant="info formbt" href="login">Back</Button></div>
+            <div className="row">
+            <div className="column">  <Button variant="info formbt" type="submit">Submit</Button></div>
+            <div className="column middle"></div>
+            <div className="column"> <Button variant="info formbt" href="login">Back</Button></div>
             </div>
             </div>
             </Form>
@@ -113,4 +115,17 @@ render() {
     }
 }
 
-export default registration;
+registration.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+
+
+export default connect(mapStateToProps, { registerUser })(withRouter(registration));
