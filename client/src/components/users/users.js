@@ -14,7 +14,7 @@ class profile extends React.Component{
         }
     }
 
-    componentDidMount() {   
+  componentDidMount() {   
 
         axios.get('/users')
         .then((res) => {

@@ -54,8 +54,8 @@ class App extends React.Component{
   render(){
 
   if (localStorage.jwtToken) {    
-    const decoded = jwt_decode(localStorage.jwtToken);  
-    const role = decoded.role ? decoded.role[0] : ''      
+    //const decoded = jwt_decode(localStorage.jwtToken);  
+    //const role = decoded.role ? decoded.role[0] : ''      
   }
    
     

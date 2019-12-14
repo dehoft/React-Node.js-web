@@ -4,4 +4,29 @@
 }
 
 
+.cards{    
+    padding-bottom: 2%;    
+}
 
+
+.grid{
+    margin-left: 5%;
+    padding-top: 0%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+
+
+.productsbg{
+    padding-top: 8%;
+    padding-bottom: 5%;
+    width: 100%;
+    height: 777px;
+    background-image: url(./bookcase.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    clear: both;
+  
+}
