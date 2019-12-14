@@ -24,7 +24,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 
 export const loginUser = (userData) => dispatch => {    
-    axios.post('/users/login',userData)
+    axios.post('/users/login', userData)
         .then((res) => {
             if (res.status !== 200 && res.status !== 201) {
                 throw new Error('Failed!');
@@ -59,7 +59,7 @@ export const logoutUser = () => dispatch => {
 
     setAuthToken(false);
     
-    dispatch(setCurrentUser({}));
+    dispatch(setCurrentUser({})); 
 
     
-}
+};

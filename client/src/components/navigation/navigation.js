@@ -19,15 +19,13 @@ class navigation extends React.Component {
     e.preventDefault();
     this.props.logoutUser();   
     
-  }
-
-  
+  } 
 
 
 
   render (){
       const {isAuthenticated, user} = this.props.auth;
-      console.log(isAuthenticated);
+      //console.log(isAuthenticated);
       const role = user.role ? user.role[0] : null;  
       
 
@@ -44,8 +42,8 @@ class navigation extends React.Component {
             <Nav>
              {isAuthenticated && <Nav.Link href="products" >Products</Nav.Link>}
              {isAuthenticated && <Nav.Link  href="profile">Profile</Nav.Link>}
-             {isAuthenticated &&  role === 'ADMIN' && <Nav.Link  href="profile">Users</Nav.Link>}
-             <Nav.Link  href="login">Log In</Nav.Link>
+             {isAuthenticated &&  role === 'ADMIN' && <Nav.Link  href="users">Users</Nav.Link>}
+             {!isAuthenticated && <Nav.Link  href="login">Log In</Nav.Link>}
              {isAuthenticated && <Nav.Link onClick={this.props.logoutUser}>Log Out</Nav.Link>}
              
 

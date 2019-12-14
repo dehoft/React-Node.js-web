@@ -12,13 +12,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Home from './components/slideshow/slideshow';
+import Users from './components/Users/users'
 import Profile from './components/Profile/profile';
 import Products from './components/Products/products';
 import NoMatch from './components/NoMatch/noMatch';
 import Login from './components/LoginPage/login';
 import Register from './components/Registration/registration';
 import store from './store'
-
+import { logoutUser } from './actions/authActions'
 
 //import PropTypes from 'prop-types';
 //import {connect} from 'react-redux';
@@ -26,11 +27,20 @@ import store from './store'
 
 // token check
 
-if (localStorage.jwtToken) {
+if (localStorage.jwtToken){
   
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
+
+  const currentTime = Date.now() / 1000
+  if(decoded.exp < currentTime) {
+      //Logout user
+      store.dispatch(logoutUser());     
+      // Redirect to login
+      window.location.href = '/login'
+  }
+
 }
 
 class App extends React.Component{
@@ -39,9 +49,16 @@ class App extends React.Component{
     userId: null
   }
 
-
+  
 
   render(){
+
+  if (localStorage.jwtToken) {    
+    const decoded = jwt_decode(localStorage.jwtToken);  
+    const role = decoded.role ? decoded.role[0] : ''      
+  }
+   
+    
     return (
       <Provider store= { store }>
         <React.Fragment>          
@@ -50,6 +67,7 @@ class App extends React.Component{
               <Switch>        
                 <Route exact path="/" component={Home} />
                 <Route path="/profile" component={Profile} />
+                <Route path="/users" component={Users} />
                 <Route path="/products" component={Products} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
@@ -60,11 +78,12 @@ class App extends React.Component{
             </Router>
             <Footer/>           
           </React.Fragment>
-        </Provider>
-      
+        </Provider>     
 
     );
   }
 }
+
+
 
 export default App;

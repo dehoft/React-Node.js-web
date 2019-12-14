@@ -1,37 +1,61 @@
-import React, {Component} from 'react';
-import './users.css';
+import React from 'react'
+import axios from 'axios'
+import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
 
-class Users extends Component{
 
-    constructor(){
+class profile extends React.Component{  
+ constructor(){
         super();
+        
         this.state = {
-            items: [],
+            users: [],
+            usersProductsCount: [],
             lenght: 0,         
         }
     }
 
-    componentDidMount() {        
-        fetch('http://localhost:3000/users')
-        .then(res => res.json())
-        .then(res => this.setState({items:res.users}));
+    componentDidMount() {   
+
+        axios.get('/users')
+        .then((res) => {
+            //console.log(res.data.users);
+            this.setState({users:res.data.users})
+                          
+        })      
+        .catch((err) => {
+            console.log(err);
+        });     
     }
+    
+  render() {    
 
-  render() {
-    return (
-    <div>
-        <h2>Users </h2>
-        <ul>
-            {/* {this.state.items.map(user => 
-                <li key={user._id}> { user.username } { user.adress } {user.city }</li>                
-            )} */} 
+    
 
+      return (
+      <React.Fragment>
+
+        <MDBContainer>
+          <MDBListGroup style={{ width: "22rem" }}>           
             
-        </ul>
-        
-    </div>
-  ); 
+            {this.state.users.map(user => (
+           <MDBListGroupItem href="user" hover key={user._id}>  
+                {user.username}
+            </MDBListGroupItem>
+          ))}         
+          </MDBListGroup>
+        </MDBContainer>
+
+
+      </React.Fragment>
+      
+      
+      )
+          
+      
+  
   }
 }
 
-export default Users;
+
+
+export default profile;
