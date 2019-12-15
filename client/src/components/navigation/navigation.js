@@ -46,11 +46,13 @@ class navigation extends React.Component {
              {!isAuthenticated && <Nav.Link  href="login">Log In</Nav.Link>}
              {isAuthenticated && <Nav.Link onClick={this.props.logoutUser}>Log Out</Nav.Link>} */}
 
-             <Nav.Link href="products" >Products</Nav.Link>
-             <Nav.Link  href="profile">Profile</Nav.Link>
-             <Nav.Link  href="users">Users</Nav.Link>
-             <Nav.Link  href="login">Log In</Nav.Link>
+             <Nav.Link href="/products" >Products</Nav.Link>
+             <Nav.Link  href="/profile">Profile</Nav.Link>
+             <Nav.Link  href="/users">Users</Nav.Link>
+             <Nav.Link  href="/login">Log In</Nav.Link>
              <Nav.Link onClick={this.props.logoutUser}>Log Out</Nav.Link>
+             <Nav.Link href="/userProducts" >User Products</Nav.Link>
+             
              
 
             

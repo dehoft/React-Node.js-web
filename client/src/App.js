@@ -15,6 +15,10 @@ import Home from './components/slideshow/slideshow';
 import Users from './components/Users/users'
 import Profile from './components/Profile/profile';
 import Products from './components/Products/products';
+import AddProduct from './components/Products/addProduct';
+import UserProducts from './components/Products/userProducts';
+import SingleProduct from './components/Products/singleProduct';
+import ProductMessages from './components/Products/productMessages';
 import NoMatch from './components/NoMatch/noMatch';
 import Login from './components/LoginPage/login';
 import Register from './components/Registration/registration';
@@ -69,9 +73,14 @@ class App extends React.Component{
                 <Route path="/profile" component={Profile} />
                 <Route path="/users" component={Users} />
                 <Route path="/products" component={Products} />
+                <Route path="/userProducts" component={UserProducts} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path='/login' component={Home}/>
+                <Route path="/product/:id,:userId" exact component={SingleProduct} />
+                <Route path="/productMessages/:id" exact component={ProductMessages} />
+                <Route path="/addProduct" component={AddProduct} />
+                
                 
                 <Route component={NoMatch} />
               </Switch>        

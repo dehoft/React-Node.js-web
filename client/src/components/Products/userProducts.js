@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios'
+import jwt_decode from 'jwt-decode';
+
 import './products.css'
 import {
     Grid
@@ -16,14 +18,19 @@ class products extends React.Component{
         this.state = {
             users: ["Stalas", "Kede", "Spinta", "Tavo tevas", "Taburete", "Lova", "Lentyna", "Vonios spintele", "Stalcius", "Didele spinta"],
             products: [],
-            lenght: 0,         
+            userId: ''       
         }
     }
 
 
-    componentDidMount() {   
+    componentDidMount(){   
+          
+        const decoded = localStorage.jwtToken ? jwt_decode(localStorage.jwtToken) : '';
+        this.setState({userId:decoded.userId});
 
-        axios.get('/products')
+        const request = `/users/${decoded.userId}/userProducts`
+
+        axios.get(request)
         .then((res) => {
             console.log(res.data);
             this.setState({products: res.data})
@@ -36,7 +43,7 @@ class products extends React.Component{
 
    handleDelete(id){
 
-       const request = `/products/${id}`
+       const request = `/users/${this.state.userId}/userProducts/${id}`
        axios.delete(request)
         .then((res) => {
             console.log(res); 
@@ -46,22 +53,23 @@ class products extends React.Component{
         .catch((err) => {
             console.log(err);
         });
-
+             
    }
     
-  render() {    
-
+  render() {   
 
       return (
 
-      <div className='productsbg'>
+    <React.Fragment>        
+        <div className='productsbg'>
+        <a href='/addProduct' className="btn btn-primary addButton">Add product</a>
                 
             <Grid
                 container                
                 direction="row"
                 justify="flex-start"
                 alignItems="flex-start"
-                className='grid phone-only'
+                className='grid'
             >
                 {this.state.products.map(product => (
                     <Grid item xs={12} sm={6} md={3} className='cards'  key={this.state.products.indexOf(product)}>
@@ -70,8 +78,9 @@ class products extends React.Component{
                         <h5 className="card-title">{product.name}</h5>
                         <p className="card-text">Height: {product.height}m   </p>
                         <p className="card-text">Lenght: {product.lenght}m   </p>
-                        <a href={`product/${product._id},${product.fk_User}`} className="btn btn-primary messagesButton">Messages</a>
-                        <a onClick={() => this.handleDelete(product._id)} className="btn btn-primary deleteButtonAdmin">Delete product</a>
+                        <a href={`productMessages/${product._id}`} className="btn btn-primary messagesButton">Messages</a>
+                        <a href={`editProduct/${product._id}`} className="btn btn-primary editButton">Edit product</a>
+                        <a onClick={() => this.handleDelete(product._id)} className="btn btn-primary deleteButton">Delete product</a>
                         
                         </div>
                     </div>
@@ -82,7 +91,8 @@ class products extends React.Component{
         
 
 
-      </div>
+        </div>
+    </React.Fragment>
 
 /*             <div className='productsbg'>
                 
