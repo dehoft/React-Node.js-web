@@ -4,16 +4,39 @@
 }
 
 
-.cards{    
+.card{    
+    opacity: 0.9;
     padding-bottom: 2%;    
+    border-radius: 12%;
+    background-color: rgb(255, 244, 223);
+    
+
+    
+        
+}
+.cards{        
+    padding-bottom: 2%; 
 }
 
 
-.grid{
+.grid{    
     margin-left: 5%;
     padding-top: 0%;
     margin-top: 0%;
     margin-bottom: 0%;
+}
+
+.deleteButton{
+    margin-left: 5%;
+    
+    
+}
+
+.deleteButton:hover{
+    margin-left: 5%;
+    background-color: rgb(240, 47, 47);
+    border-color: rgb(238, 73, 73);
+    
 }
 
 
@@ -30,3 +53,32 @@
     clear: both;
   
 }
+
+.slide-bottom {
+	-webkit-animation: slide-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: slide-bottom 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+
+
+ @-webkit-keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    100% {
+      -webkit-transform: translateY(100px);
+              transform: translateY(100px);
+    }
+  }
+  @keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    100% {
+      -webkit-transform: translateY(100px);
+              transform: translateY(100px);
+    }
+  }
+  

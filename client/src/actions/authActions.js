@@ -60,6 +60,7 @@ export const logoutUser = () => dispatch => {
     setAuthToken(false);
     
     dispatch(setCurrentUser({})); 
+    window.location.reload();
 
     
 };

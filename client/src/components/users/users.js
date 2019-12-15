@@ -10,7 +10,8 @@ class profile extends React.Component{
         this.state = {
             users: [],
             usersProductsCount: [],
-            lenght: 0,         
+            fakeUsers: ["Adminas", "Tavo mama", "Tava tevas", "Arvydelis",
+            "Eivydukas", "Tomas"]         
         }
     }
 
@@ -34,12 +35,25 @@ class profile extends React.Component{
       return (
       <React.Fragment>
 
-        <MDBContainer>
+{/*         <MDBContainer>
           <MDBListGroup style={{ width: "22rem" }}>           
             
             {this.state.users.map(user => (
            <MDBListGroupItem href="user" hover key={user._id}>  
                 {user.username}
+            </MDBListGroupItem>
+          ))}         
+          </MDBListGroup>
+        </MDBContainer>
+ */}
+
+
+                <MDBContainer>
+          <MDBListGroup style={{ width: "22rem" }}>           
+            
+            {this.state.fakeUsers.map(user => (
+           <MDBListGroupItem href="user" hover key={user}>  
+                {user}
             </MDBListGroupItem>
           ))}         
           </MDBListGroup>
