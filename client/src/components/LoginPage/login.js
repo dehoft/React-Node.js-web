@@ -84,6 +84,9 @@ render() {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" ref={this.passwordEl}/>
             </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="I am 18years old" />
+            </Form.Group>
             <div className="formbtnpad">
             <div className="row">
             <div className="column"> <Button variant="info formbt formbtnspacing" type="submit" >Login</Button></div>

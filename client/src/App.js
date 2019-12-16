@@ -4,15 +4,15 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/authActions';
 
-import Navigation from './components/navigation/navigation'
-import Footer from "./components/footer/footer";
+import Navigation from './components/Navigation/navigation'
+import Footer from "./components/Footer/footer";
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Home from './components/slideshow/slideshow';
-import Users from './components/users/users'
+import Users from './components/Users/users'
 import Profile from './components/Profile/profile';
 import Products from './components/Products/products';
 import AddProduct from './components/Products/addProduct';
@@ -55,12 +55,11 @@ class App extends React.Component{
 
   render(){
 
-  if (localStorage.jwtToken) {    
-    //const decoded = jwt_decode(localStorage.jwtToken);  
-    //const role = decoded.role ? decoded.role[0] : ''      
-  }
-   
-    
+  const decoded = localStorage.jwtToken ? jwt_decode(localStorage.jwtToken) : '';
+  const isAuthenticated = localStorage.jwtToken ? true : false;
+  const role = localStorage.jwtToken ? decoded.role[0] : '';
+
+
     return (
       <Provider store= { store }>
         <React.Fragment>          
@@ -68,22 +67,19 @@ class App extends React.Component{
             <Router>
               <Switch>        
                 <Route exact path="/" component={Home} />
-                <Route path="/profile" component={Profile} />
-                <Route path="/users" component={Users} />
-                <Route path="/products" component={Products} />
-                <Route path="/userProducts" component={UserProducts} />
+                {isAuthenticated  && <Route path="/profile" component={Profile}/>}
+                {role === 'ADMIN' &&<Route path="/users" component={Users} />}
+                {role === 'ADMIN' &&<Route path="/products" component={Products} />}
+                {isAuthenticated  && <Route path="/userProducts" component={UserProducts} />}
                 <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
+                <Route path="/register" component={Register} />                
+                {role === 'ADMIN' &&<Route path="/product/:id,:userId" exact component={SingleProduct} />}
+                {isAuthenticated  && <Route path="/productMessages/:id" exact component={ProductMessages} />}
+                {isAuthenticated  && <Route path="/addProduct" component={AddProduct} />}
+                {isAuthenticated  && <Route path="/editProduct/:id" component={EditProduct} />}
                 <Route path='/login' component={Home}/>
-                <Route path="/product/:id,:userId" exact component={SingleProduct} />
-                <Route path="/productMessages/:id" exact component={ProductMessages} />
-                <Route path="/addProduct" component={AddProduct} />
-                <Route path="/editProduct/:id" component={EditProduct} />
-                
 
-                
-                
-                <Route component={NoMatch} />
+                <Route component={Home} />
               </Switch>        
             </Router>
             <Footer/>           

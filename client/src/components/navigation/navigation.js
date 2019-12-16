@@ -17,7 +17,9 @@ class navigation extends React.Component {
   onLogoutClick(e)
   {
     e.preventDefault();
-    this.props.logoutUser();   
+    
+    this.props.logoutUser(); 
+    
     
   } 
 
@@ -40,22 +42,12 @@ class navigation extends React.Component {
             <Nav className="mr-auto">
             </Nav>
             <Nav>
-{/*              {isAuthenticated && <Nav.Link href="products" >Products</Nav.Link>}
-             {isAuthenticated && <Nav.Link  href="profile">Profile</Nav.Link>}
-             {isAuthenticated &&  role === 'ADMIN' && <Nav.Link  href="users">Users</Nav.Link>}
-             {!isAuthenticated && <Nav.Link  href="login">Log In</Nav.Link>}
-             {isAuthenticated && <Nav.Link onClick={this.props.logoutUser}>Log Out</Nav.Link>} */}
-
-             <Nav.Link href="/products" >Products</Nav.Link>
-             <Nav.Link  href="/profile">Profile</Nav.Link>
-             <Nav.Link  href="/users">Users</Nav.Link>
-             <Nav.Link  href="/login">Log In</Nav.Link>
-             <Nav.Link onClick={this.props.logoutUser}>Log Out</Nav.Link>
-             <Nav.Link href="/userProducts" >User Products</Nav.Link>
-             
-             
-
-            
+              {isAuthenticated &&  role === 'ADMIN' && <Nav.Link href="/products" >Products</Nav.Link>}             
+              {isAuthenticated &&  role === 'ADMIN' && <Nav.Link  href="/users">Users</Nav.Link>}
+              {!isAuthenticated && <Nav.Link  href="/login">Log In</Nav.Link>}             
+              {isAuthenticated && <Nav.Link href="/userProducts" >User Products</Nav.Link>}            
+              {isAuthenticated && <Nav.Link  href="/profile">Profile</Nav.Link>}
+              {isAuthenticated && <Nav.Link onClick={this.props.logoutUser}>Log Out</Nav.Link>}
             </Nav>
           </Navbar.Collapse>
         </Navbar>

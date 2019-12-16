@@ -30,18 +30,21 @@ class profile extends React.Component{
 
 
       return (    
+      
+      
         
-        <table className="listcenter">
-  <tr>
-    <th className="listcenter">Authorized Users</th>
-  </tr>
-  {this.state.fakeUsers.map(user => (
-           <tr  href="user" hover key={user}>  
-               <p className="content"> {user}</p>
-            </tr>
+      <table className="listcenter">
+        <tr>
+          <th className="listcenter">Authorized Users</th>
+        </tr>
+        {this.state.fakeUsers.map(user => (
+                <tr  href="user" hover key={user}>  
+                    <p className="content"> {user}</p>
+                    
+                  </tr>
 
-          ))}         
-  </table>
+                ))}         
+      </table>
         
 
      
