@@ -33,7 +33,7 @@ class navigation extends React.Component {
     
       return (
         
-        <Navbar collapseOnSelect expand="lg" >
+        <Navbar collapseOnSelect expand="lg">
         <Nav.Item><Navbar.Brand href="/" className='colorHome'>Home</Navbar.Brand></Nav.Item>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">

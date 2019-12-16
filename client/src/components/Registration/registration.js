@@ -72,8 +72,8 @@ render() {
     
 
     return (
-        <div className="loginbg">
-        <div className="loginform center">
+        <div className="signupbg">
+        <div className="signupform center">
             <Form onSubmit={this.submitHandler}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>

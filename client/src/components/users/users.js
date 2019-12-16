@@ -1,8 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
-
-
+import "./users.css"
 class profile extends React.Component{  
  constructor(){
         super();
@@ -32,35 +30,21 @@ class profile extends React.Component{
 
     
 
-      return (
-      <React.Fragment>
-
-{/*         <MDBContainer>
-          <MDBListGroup style={{ width: "22rem" }}>           
-            
-            {this.state.users.map(user => (
-           <MDBListGroupItem href="user" hover key={user._id}>  
-                {user.username}
-            </MDBListGroupItem>
+      return (    
+        
+        <table className="listcenter">
+  <tr>
+    <th className="listcenter">Authorized Users</th>
+  </tr>
+  {this.state.fakeUsers.map(user => (
+           <tr  href="user" hover key={user}>  
+               <p className="content"> {user}</p>
+            </tr>
           ))}         
-          </MDBListGroup>
-        </MDBContainer>
- */}
+  </table>
+        
 
-
-                <MDBContainer>
-          <MDBListGroup style={{ width: "22rem" }}>           
-            
-            {this.state.fakeUsers.map(user => (
-           <MDBListGroupItem href="user" hover key={user}>  
-                {user}
-            </MDBListGroupItem>
-          ))}         
-          </MDBListGroup>
-        </MDBContainer>
-
-
-      </React.Fragment>
+     
       
       
       )

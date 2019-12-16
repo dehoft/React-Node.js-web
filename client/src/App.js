@@ -4,15 +4,15 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/authActions';
 
-import Navigation from './components/Navigation/navigation'
-import Footer from "./components/Footer/footer";
+import Navigation from './components/navigation/navigation'
+import Footer from "./components/footer/footer";
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Home from './components/slideshow/slideshow';
-import Users from './components/Users/users'
+import Users from './components/users/users'
 import Profile from './components/Profile/profile';
 import Products from './components/Products/products';
 import AddProduct from './components/Products/addProduct';

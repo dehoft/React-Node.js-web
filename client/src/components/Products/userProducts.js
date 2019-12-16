@@ -71,16 +71,16 @@ class products extends React.Component{
                 alignItems="flex-start"
                 className='grid'
             >
-                {this.state.products.map(product => (
-                    <Grid item xs={12} sm={6} md={3} className='cards'  key={this.state.products.indexOf(product)}>
+                {this.state.users.map(user => (
+                    <Grid item xs={12} sm={5} md={3} className='cards'  key={this.state.users.indexOf(user)}>
                     <div className="card" style={{ width: '18rem' }}>
                         <div className="card-body">
-                        <h5 className="card-title">{product.name}</h5>
-                        <p className="card-text">Height: {product.height}m   </p>
-                        <p className="card-text">Lenght: {product.lenght}m   </p>
-                        <a href={`productMessages/${product._id}`} className="btn btn-primary messagesButton">Messages</a>
-                        <a href={`editProduct/${product._id}`} className="btn btn-primary editButton">Edit product</a>
-                        <a onClick={() => this.handleDelete(product._id)} className="btn btn-primary deleteButton">Delete product</a>
+                        <h5 className="card-title">{user}</h5>
+                        <p className="card-text">Height: {user}m   </p>
+                        <p className="card-text">Lenght: {user}m   </p>
+                        <a href={`productMessages/${user}`} className="btn btn-primary messagesButton">Messages</a>
+                        <a href={`editProduct/${user}`} className="btn btn-primary editButton">Edit product</a>
+                        <a onClick={() => this.handleDelete(user)} className="btn btn-primary deleteButton">Delete product</a>
                         
                         </div>
                     </div>

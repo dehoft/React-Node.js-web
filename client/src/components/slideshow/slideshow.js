@@ -12,7 +12,7 @@ function slideshow() {
     <Carousel className="carousel">
   <Carousel.Item>
     <img
-      className="d-block w-100"
+      className="d-block w-100 slideshowimg"
       src={room}
       alt="First slide"
     />
@@ -23,7 +23,7 @@ function slideshow() {
   </Carousel.Item>
   <Carousel.Item>
     <img
-      className="d-block w-100"
+      className="d-block w-100 slideshowimg"
       src={room2}
       alt="Third slide"
     />
@@ -35,7 +35,7 @@ function slideshow() {
   </Carousel.Item>
   <Carousel.Item>
     <img
-      className="d-block w-100"
+      className="d-block w-100 slideshowimg"
       src={room3}
       alt="Third slide"
     />
