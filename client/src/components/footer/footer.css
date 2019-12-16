@@ -1,18 +1,31 @@
 .fonas{
-    background-color:#0b0c10;
+    background-color:#ffffff;
 }
 
 .text{
-    color:#66fcf1;
+    color:black;
 }
 
 footer {
     position: absolute;
     width: 100%;
     clear: both;
+    font-family:"Nunito-Regular";
     
 }
 html {
     position: relative;
     min-height: 100%;
+}
+.vl {
+    border-left: 1px solid black;
+    height: 100%;
+    float: right;
+  }
+  
+ 
+ @media (max-width: 756px) {
+    .vl {
+      display: none;
+    }
 }

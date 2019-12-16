@@ -17,11 +17,14 @@ function footer() {
            
       </div>  
 
-      <div className="pl-10 col-md-2 mt-md-1 mt-3 ">       
-        <h5 className="text-uppercase text about">About us</h5>       
+      <div className="pl-10 col-md-2 mt-md-1 mt-3 ">  
+      <div className="vl"></div>     
+        <h5 className="text-uppercase text about">About us</h5>  
       </div> 
+
       <hr className="clearfix w-100 d-md-none pb-3"></hr>     
-      <div className="col-md-4 mb-md-0 mb-3">      
+      <div className="col-md-4 mb-md-0 mb-3">     
+      <div className="vl"></div>  
         <h5 className="text-uppercase text">Contact information</h5>
         <ul className="list-unstyled text">
           <li>
@@ -31,6 +34,7 @@ function footer() {
             <h6>+370 622 300 34</h6>
           </li>
         </ul>
+        
       </div>   
       <div className="col-md-3 mb-md-0 mb-3 text">       
         <h5 className="text-uppercase">Having trouble deciding the design?</h5>

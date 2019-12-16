@@ -83,6 +83,7 @@ class products extends React.Component{
                 alignItems="flex-start"
                 className='grid'
             >
+
                 {this.state.products.map(product => (
                     <div className="spacing">
                     <Grid item xs={12} sm={6} md={3} className='cards'  key={this.state.products.indexOf(product)}>
@@ -108,6 +109,8 @@ class products extends React.Component{
                            
                             </MDBModalFooter>
                         </MDBModal>
+
+
                         
 
                         

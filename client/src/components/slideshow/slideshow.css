@@ -1,8 +1,19 @@
 
  
  @media (max-width: 900px) {
-    .carousel {
+    .carousel  .slideshowimg{
       width:auto;
       height:auto;
     }
+}
+.slideshowimg{
+height: 756px;
+width: auto;
+}
+p{
+  font-family:"Nunito-Light";
+}
+
+h3{
+  font-family:"Nunito-Regular";
 }
