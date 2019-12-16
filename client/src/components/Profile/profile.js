@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button'
 class profile extends React.Component{  
 
  constructor(){
+     
         super();
 
         this.usernameEl = React.createRef();
@@ -36,7 +37,7 @@ class profile extends React.Component{
         
 
         const string = `/users/${userId}`;
-        console.log(string);
+        
 
         axios.get(string)
         .then((res) => {           
@@ -48,7 +49,7 @@ class profile extends React.Component{
                 phoneNumber: res.data.phoneNumber,
                 role: res.data.role[0]
             });
-            //console.log(res.data);             
+                        
         })      
         .catch((err) => {
             console.log(err);
@@ -87,7 +88,9 @@ class profile extends React.Component{
           
         axios.patch(string, patchData)
         .then((res) => { 
-            console.log(res.data);             
+            
+            window.location.reload(); 
+                         
         })      
         .catch((err) => {
             console.log(err);

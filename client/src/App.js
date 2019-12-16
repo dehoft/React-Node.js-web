@@ -16,17 +16,15 @@ import Users from './components/Users/users'
 import Profile from './components/Profile/profile';
 import Products from './components/Products/products';
 import AddProduct from './components/Products/addProduct';
+import EditProduct from './components/Products/editProduct';
 import UserProducts from './components/Products/userProducts';
 import SingleProduct from './components/Products/singleProduct';
-import ProductMessages from './components/Products/productMessages';
+import ProductMessages from './components/Products/productMessages'
 import NoMatch from './components/NoMatch/noMatch';
 import Login from './components/LoginPage/login';
 import Register from './components/Registration/registration';
 import store from './store'
 import { logoutUser } from './actions/authActions'
-
-//import PropTypes from 'prop-types';
-//import {connect} from 'react-redux';
 
 
 // token check
@@ -80,6 +78,9 @@ class App extends React.Component{
                 <Route path="/product/:id,:userId" exact component={SingleProduct} />
                 <Route path="/productMessages/:id" exact component={ProductMessages} />
                 <Route path="/addProduct" component={AddProduct} />
+                <Route path="/editProduct/:id" component={EditProduct} />
+                
+
                 
                 
                 <Route component={NoMatch} />

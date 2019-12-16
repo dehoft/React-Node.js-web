@@ -12,18 +12,16 @@ class profile extends React.Component{
  constructor(){
         super();
 
-        this.usernameEl = React.createRef();
-        this.cityEl = React.createRef();
-        this.adressEl = React.createRef();
+        this.nameEl = React.createRef();
+        this.heightEl = React.createRef();
+        this.lenghtEl = React.createRef();
         this.phoneNumberEl = React.createRef();
 
         this.state = {
             id: null,
-            username: null,
-            city: null,
-            adress: null,
-            phoneNumber: null,
-            role: null                
+            name: null,
+            lenght: null,
+            height: null             
         }
     }
 
@@ -35,20 +33,17 @@ class profile extends React.Component{
         const userId = decoded.userId;
         
 
-        const string = `/users/${userId}`;
+        const string = `/users/${userId}/userProducts/${this.props.match.params.id}`;
         console.log(string);
 
         axios.get(string)
         .then((res) => {           
-            this.setState({
+                this.setState({
                 id: res.data._id,
-                username: res.data.username,
-                city: res.data.city,
-                adress: res.data.adress,
-                phoneNumber: res.data.phoneNumber,
-                role: res.data.role[0]
-            });
-            //console.log(res.data);             
+                name: res.data.name,
+                height: res.data.height,
+                lenght: res.data.lenght                
+            });   
         })      
         .catch((err) => {
             console.log(err);
@@ -63,31 +58,28 @@ class profile extends React.Component{
         const userId = decoded.userId;
         
 
-        const string = `/users/${userId}`;
+        const string = `/users/${userId}/userProducts/${this.props.match.params.id}`;
 
         const patchData = [
             {
-                "propName": "username",
-                "value": this.usernameEl.current.value ? this.usernameEl.current.value : this.state.username
+                "propName": "name",
+                "value": this.nameEl.current.value ? this.nameEl.current.value : this.state.name
             },
             {
-                "propName": "city",
-                "value": this.cityEl.current.value ? this.cityEl.current.value : this.state.city
+                "propName": "height",
+                "value": this.heightEl.current.value ? this.heightEl.current.value : this.state.height
             },
             {
-                "propName": "adress",
-                "value": this.adressEl.current.value ? this.adressEl.current.value : this.state.adress
-            },
-            {
-                "propName": "phoneNumber",
-                "value": this.phoneNumberEl.current.value ? this.phoneNumberEl.current.value : this.state.phoneNumber.toString()
-            }           
+                "propName": "lenght",
+                "value": this.lenghtEl.current.value ? this.lenghtEl.current.value : this.state.lenght
+            }                  
             
         ];      
           
         axios.patch(string, patchData)
         .then((res) => { 
-            console.log(res.data);             
+            console.log(res.data);   
+            this.props.history.push('/userProducts')             
         })      
         .catch((err) => {
             console.log(err);
@@ -105,30 +97,26 @@ class profile extends React.Component{
        <div className="loginbg">
         <div className="loginform center">
             <Form onSubmit={this.submittHandler}>
-                <Form.Group controlId="formBasicUsername">
-                    <Form.Label>Current username</Form.Label>
-                    <Form.Control type="username" placeholder={this.state.username}  ref={this.usernameEl} />
+                <Form.Group controlId="formBasicName">
+                    <Form.Label>Current name</Form.Label>
+                    <Form.Control type="name" placeholder={this.state.name}  ref={this.nameEl} />
                 </Form.Group>
  
-                <Form.Group controlId="formBasicCity">
-                    <Form.Label>Current city</Form.Label>
-                    <Form.Control type="city"  placeholder={this.state.city} ref={this.cityEl}/>
+                <Form.Group controlId="formBasicHeight">
+                    <Form.Label>Current height</Form.Label>
+                    <Form.Control type="height"  placeholder={this.state.height} ref={this.heightEl}/>
                 </Form.Group>
 
-                <Form.Group controlId="formBasicAdress">
-                    <Form.Label>Current adress</Form.Label>
-                    <Form.Control type="adress"  placeholder={this.state.adress} ref={this.adressEl}/>
+                <Form.Group controlId="formBasicLenght">
+                    <Form.Label>Current lenght</Form.Label>
+                    <Form.Control type="lenght"  placeholder={this.state.lenght} ref={this.lenghtEl}/>
                 </Form.Group>
-
-                <Form.Group controlId="formBasicPhoneNumber">
-                    <Form.Label>Current phone number</Form.Label>
-                    <Form.Control type="phoneNumber"  placeholder={this.state.phoneNumber} ref={this.phoneNumberEl}/>
-                </Form.Group>
+                
             <div className="formbtnpad">
             <div className="row">
-            <div className="column">  <Button variant="info formbt" type="submit">Change user info</Button></div>
+            <div className="column">  <Button variant="info formbt" type="submit">Change product info</Button></div>
             <div className="column middle"></div>
-            <div className="column"> <Button variant="info formbt" href="/">Back</Button></div>
+            <div className="column"> <Button variant="info formbt" href="/userProducts">Back</Button></div>
             </div>
             </div>
             </Form>

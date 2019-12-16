@@ -4,6 +4,8 @@ import './products.css'
 import {
     Grid
 } from '@material-ui/core/'
+import { MDBBtn, MDBModal, MDBModalBody, MDBModalFooter } from 'mdbreact';
+import Button from 'react-bootstrap/Button'
 
 
 
@@ -16,7 +18,9 @@ class products extends React.Component{
         this.state = {
             users: ["Stalas", "Kede", "Spinta", "Tavo tevas", "Taburete", "Lova", "Lentyna", "Vonios spintele", "Stalcius", "Didele spinta"],
             products: [],
-            lenght: 0,         
+            lenght: 0,   
+            modal: false,
+            deleteableId: ''       
         }
     }
 
@@ -36,7 +40,7 @@ class products extends React.Component{
 
    handleDelete(id){
 
-       const request = `/products/${id}`
+       const request = `/products/${this.state.deleteableId}`
        axios.delete(request)
         .then((res) => {
             console.log(res); 
@@ -47,13 +51,22 @@ class products extends React.Component{
             console.log(err);
         });
 
-   }
+    }
+
+    toggle = (id) => {
+        this.setState({
+            modal: !this.state.modal,
+            deleteableId: id
+        });
+    }
+
+   
     
   render() {    
 
 
       return (
-
+<React.Fragment>   
       <div className='productsbg'>
                 
             <Grid
@@ -64,61 +77,38 @@ class products extends React.Component{
                 className='grid phone-only'
             >
                 {this.state.products.map(product => (
+                    <div className="spacing">
                     <Grid item xs={12} sm={6} md={3} className='cards'  key={this.state.products.indexOf(product)}>
                     <div className="card" style={{ width: '18rem' }}>
                         <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>
                         <p className="card-text">Height: {product.height}m   </p>
                         <p className="card-text">Lenght: {product.lenght}m   </p>
-                        <a href={`product/${product._id},${product.fk_User}`} className="btn btn-primary messagesButton">Messages</a>
-                        <a onClick={() => this.handleDelete(product._id)} className="btn btn-primary deleteButtonAdmin">Delete product</a>
+                        <Button href={`product/${product._id},${product.fk_User}`} className="btn btn-primary messagesButton">Messages</Button>
+                        <Button onClick={() => this.toggle(product._id)} className="btn btn-primary deleteButtonAdmin">Delete product</Button>
                         
-                        </div>
+                    </div>
                     </div>
                     </Grid>
+
+                        <MDBModal isOpen={this.state.modal} toggle={this.toggle} >                            
+                            <MDBModalBody >
+                            Are you sure you want to delete this product?
+                            </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn className="btn btn-primary modalSaveButton" onClick={() => this.handleDelete(product._id)} >Delete product</MDBBtn>
+                            <MDBBtn className="btn btn-primary modalCancelButton" onClick={this.toggle}>Cancel</MDBBtn>
+                           
+                            </MDBModalFooter>
+                        </MDBModal>
+
+                        </div>
                 ))}
 
             </Grid>
-        
-
-
       </div>
-
-/*             <div className='productsbg'>
-                
-            <Grid
-                container                
-                direction="row"
-                justify="flex-start"
-                alignItems="flex-start"
-                className='grid'
-            >
-                {this.state.users.map(user => (
-                    <Grid item xs={12} sm={6} md={3} className='cards'  key={this.state.users.indexOf(user)}>
-                    <div className="card" style={{ width: '18rem' }}>
-                        <div className="card-body">
-                        <h5 className="card-title">{user}</h5>
-                        <p className="card-text">Height:    </p>
-                        <p className="card-text">Lenght:   </p>
-                        <a href="messages" className="btn btn-primary">Messages</a>
-                        <a  className="btn btn-primary deleteButton">Delete product</a>
-                        </div>
-                    </div>
-                    </Grid>
-                ))}
-
-            </Grid>
-        
-
-
-      </div> */
-      
-      
-      )
-     
-          
-      
-  
+      </React.Fragment> 
+      )  
   }
 }
 

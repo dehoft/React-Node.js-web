@@ -1,15 +1,9 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
 import axios from 'axios'
 import PropTypes from 'prop-types';
 import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
-
-
 import './products.css'
-import {
-    Grid
-} from '@material-ui/core/'
+
 
 
 
@@ -40,7 +34,7 @@ class products extends React.Component{
 
     
   render() {    
-      const id = this.props.match.params.id      
+      //const id = this.props.match.params.id      
 
       return (  
 

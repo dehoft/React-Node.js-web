@@ -19,9 +19,8 @@ class registration extends React.Component {
     constructor(props) 
     {
         super(props);
-        this.nameEl = React.createRef();
-        this.heightEl = React.createRef();
-        this.lenghtEl = React.createRef();
+        this.noteEl = React.createRef();
+        
         
 
         this.state = {
@@ -33,28 +32,25 @@ class registration extends React.Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        const name = this.nameEl.current.value;
-        const height = this.heightEl.current.value;
-        const lenght = this.lenghtEl.current.value; 
+        const note = this.noteEl.current.value;
+       
 
         const decoded = localStorage.jwtToken ? jwt_decode(localStorage.jwtToken) : '';
 
         const requestBody = {
 
-            "name": name,
-            "height": height,
-            "lenght": lenght,
-            "fk_User": decoded.userId            
+            "note": note
+                  
         };
 
-        console.log(this.state.userId);
+        console.log(note);
 
-        const request = `/users/${decoded.userId}/userProducts`
+        const request = `/users/${decoded.userId}/userProducts/${this.props.match.params.id}/productNotes`
 
         axios.post(request,requestBody)
         .then((res) => {
             console.log(res.data);  
-            this.props.history.push('/userProducts')            
+            this.props.history.push(`/userProducts/${this.props.match.params.id}/productNotes`)            
                           
         })      
         .catch((err) => {
@@ -86,20 +82,10 @@ class registration extends React.Component {
             <div className="loginbg">
             <div className="loginform center">
                 <Form onSubmit={this.submitHandler}>
-                    <Form.Group controlId="formBasicName">
-                        <Form.Label>Product name</Form.Label>
-                        <Form.Control type="name" placeholder="Enter product name" ref={this.nameEl}/>
-                    </Form.Group>
-
-                    <Form.Group controlId="formBasicHeight">
-                        <Form.Label>Height</Form.Label>
-                        <Form.Control type="height" placeholder="Enter height" ref={this.heightEl}/>
-                    </Form.Group>
-                    
-                    <Form.Group controlId="formBasicLenght">
-                        <Form.Label>Lenght</Form.Label>
-                        <Form.Control type="lenght" placeholder="Enter lenght" ref={this.lenghtEl}/>
-                    </Form.Group>
+                    <Form.Group controlId="formBasicNote">
+                        <Form.Label>Note</Form.Label>
+                        <Form.Control type="note" placeholder="Enter the note" ref={this.noteEl}/>
+                    </Form.Group>                    
                     
                 <div className="formbtnpad">
                 <div className="row">
